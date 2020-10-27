@@ -60,7 +60,7 @@ namespace CassiopeiaRVMP
             Zhonia = new Item((int)ItemId.Zhonyas_Hourglass, 450);
             Seraph = new Item((int)ItemId.Seraphs_Embrace, 450);
             _Ignite = new Spell(ObjectManager.Player.GetSpellSlot("summonerdot"), 600);
-            PredictionMenu = new Menu("PredictionMenu", "Prediction Menu", true);
+            PredictionMenu = new Menu("PredictionMenu", "RVMP:Prediction Menu",true);
             PredictionMenu.Add(new MenuList("PredSelect", "Select Prediction:", new[] { "RVMP Prediction", "Common Prediction" }, 0));
             StartMenu = new Menu("Cassiopeia", "RVMP:Cassiopeia", true);
             ComboMenu = new Menu("General/Combo Settings", "General/Combo Settings");
@@ -134,7 +134,9 @@ namespace CassiopeiaRVMP
             DebugC.Add(new MenuBool("Debug", "Debug Console+Chat", false));
             DebugC.Add(new MenuBool("DrawStatus1", "Debug Curret Orbawlker mode"));
             StartMenu.Add(DebugC);
+            PredictionMenu.Attach();
             StartMenu.Attach();
+
             Drawing.OnDraw += Drawing_OnDraw;
             Game.OnUpdate += Game_OnUpdate;
             Interrupter.OnInterrupterSpell += Interruptererer;
@@ -395,7 +397,7 @@ namespace CassiopeiaRVMP
             private static void Combo()
             {
 
-            var EDelay = ESet.GetValue<MenuSlider>("Edelay").Value;
+            var EDelay = ESet["Edelay"].GetValue<MenuSlider>().Value;
             var target = TargetSelector.GetTarget(_Q.Range, DamageType.Magical);
             var targetQ2 = TargetSelector.GetTarget(_Q.Range, DamageType.Magical);
             if (target == null)
@@ -420,9 +422,10 @@ namespace CassiopeiaRVMP
 
                 if(_E.IsReady() & target.IsValidTarget(_E.Range))
                     {
-                         if (Environment.TickCount >= LastECast + (1 * 100))
+                         if (Environment.TickCount >= LastECast + (EDelay * 100))
                          _E.Cast(target);
-                    }
+                    Game.Print("Casting E RVMP");
+                }
                 if (_Q.IsReady())
                 {
 
@@ -441,6 +444,7 @@ namespace CassiopeiaRVMP
                 {
 
                         _E.Cast(target);
+                    Game.Print("Casting E Common");
                 }
                 if (_Q.IsReady())
                 {
@@ -533,7 +537,7 @@ namespace CassiopeiaRVMP
         public static void KillSteal()
         {
             var targetQ = TargetSelector.GetTarget(_Q.Range, DamageType.Magical);
-            var targetE = TargetSelector.GetTarget(_W.Range, DamageType.Magical);
+            var targetE = TargetSelector.GetTarget(_E.Range, DamageType.Magical);
             if (targetQ == null)
             {
                 return;
