@@ -424,7 +424,6 @@ namespace CassiopeiaRVMP
                     {
                          if (Environment.TickCount >= LastECast + (EDelay * 100))
                          _E.Cast(target);
-                    Game.Print("Casting E RVMP");
                 }
                 if (_Q.IsReady())
                 {
@@ -444,7 +443,6 @@ namespace CassiopeiaRVMP
                 {
 
                         _E.Cast(target);
-                    Game.Print("Casting E Common");
                 }
                 if (_Q.IsReady())
                 {
