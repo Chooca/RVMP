@@ -35,7 +35,7 @@ namespace CassiopeiaRVMP
         private static long LastECast = 0;
         private static Vector3 QPosition;
 
-        private static Menu StartMenu, ComboMenu, LastHitM, DebugC, DrawingsMenu, JungleMenu, ClearMenu, UtilityMenu, RSet, ESet, WSet, QSet, otheroptions;
+        private static Menu PredictionMenu, StartMenu, ComboMenu, LastHitM, DebugC, DrawingsMenu, JungleMenu, ClearMenu, UtilityMenu, RSet, ESet, WSet, QSet, otheroptions;
 
 
       
@@ -60,7 +60,9 @@ namespace CassiopeiaRVMP
             Zhonia = new Item((int)ItemId.Zhonyas_Hourglass, 450);
             Seraph = new Item((int)ItemId.Seraphs_Embrace, 450);
             _Ignite = new Spell(ObjectManager.Player.GetSpellSlot("summonerdot"), 600);
-            StartMenu = new Menu("Cassiopeia", "Cassiopeia", true);
+            PredictionMenu = new Menu("PredictionMenu", "Prediction Menu", true);
+            PredictionMenu.Add(new MenuList("PredSelect", "Select Prediction:", new[] { "RVMP Prediction", "Common Prediction" }, 0));
+            StartMenu = new Menu("Cassiopeia", "RVMP:Cassiopeia", true);
             ComboMenu = new Menu("General/Combo Settings", "General/Combo Settings");
             ClearMenu = new Menu("Clearing Menu", "Clearing Menu");
             JungleMenu = new Menu("JClearing Menu", "JClearing Menu");
@@ -412,6 +414,8 @@ namespace CassiopeiaRVMP
             {
                 Orbwalker.AttackState = false;
             }
+            if(PredictionMenu["PredSelect"].GetValue<MenuList>().Index == 0)
+            {
 
 
                 if(_E.IsReady() & target.IsValidTarget(_E.Range))
@@ -430,7 +434,26 @@ namespace CassiopeiaRVMP
                     _W.Cast(PreCastPos(target, _Player.Position.Distance(target.Position) / _W.Speed));
 
                 }
+            }
+            if (PredictionMenu["PredSelect"].GetValue<MenuList>().Index == 1)
+            {
+                if (_E.IsReady() & target.IsValidTarget(_E.Range))
+                {
 
+                        _E.Cast(target);
+                }
+                if (_Q.IsReady())
+                {
+
+                    _Q.Cast(target);
+
+                }
+                if (_W.IsReady() && Environment.TickCount > LastQCast + _Q.Delay * 1000)
+                {
+                    _W.Cast(target);
+
+                }
+            }
 
         }
 
