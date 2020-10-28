@@ -1,5 +1,5 @@
 # RVMP
-# Current version - 0.0.0.2(SDKV1, !SDKV2 not updated yet ETA~1DAY)
+# Current version - 0.0.0.2(10.22)
 # Curret supported
 Cassiopeia
 # WIP
