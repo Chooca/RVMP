@@ -61,7 +61,7 @@ namespace CassiopeiaRVMP
             Seraph = new Item((int)ItemId.Seraphs_Embrace, 450);
             _Ignite = new Spell(ObjectManager.Player.GetSpellSlot("summonerdot"), 600);
             PredictionMenu = new Menu("PredictionMenu", "RVMP:Prediction Menu",true);
-            PredictionMenu.Add(new MenuList("PredSelect", "Select Prediction:", new[] { "RVMP Prediction", "Common Prediction" }, 0));
+            PredictionMenu.Add(new MenuList("PredSelect", "Select Prediction:", new[] { "RVMP Prediction", "Common Prediction" }, 1));
             StartMenu = new Menu("Cassiopeia", "RVMP:Cassiopeia", true);
             ComboMenu = new Menu("General/Combo Settings", "General/Combo Settings");
             ClearMenu = new Menu("Clearing Menu", "Clearing Menu");
